@@ -14,6 +14,12 @@ public class NorthwindDb : DbContext
         string connectionString = $"Data Source={path}";
         Console.WriteLine($"Connection: {connectionString}");
         optionsBuilder.UseSqlite(connectionString);
+
+        // optionsBuilder.LogTo(Console.WriteLine)
+        // #if DEBUG
+        //     .EnableSensitiveDataLogging()
+        //     .EnableDetailedErrors();
+        // #endif
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,5 +35,8 @@ public class NorthwindDb : DbContext
                 .Property(p => p.Cost)
                 .HasConversion<double>();
         }
+
+        modelBuilder.Entity<Product>()
+            .HasQueryFilter(p => !p.Discontinued);
     }
 }
