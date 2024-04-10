@@ -14,6 +14,8 @@ public class NutshellContext : DbContext
         Console.WriteLine($"connection string: {connectionString}");
 
         optionsBuilder.UseSqlite(connectionString);
+
+        optionsBuilder.LogTo(Console.WriteLine);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
